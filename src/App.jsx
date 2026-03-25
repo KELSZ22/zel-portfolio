@@ -30,9 +30,7 @@ import supportImage from "./assets/zel-image.png";
 
 const NAV_LINKS = [
   { href: "#hero", label: "Home" },
-  { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
-  { href: "#tools", label: "Tools" },
   { href: "#works", label: "Works" },
   { href: "#contact", label: "Contact" },
 ];
@@ -80,9 +78,10 @@ function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-text-muted"
+          className="md:hidden text-text-muted inline-flex items-center justify-center h-10 w-10 rounded-xl hover:bg-primary/5 transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -90,18 +89,32 @@ function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-cream/95 backdrop-blur-sm border-t border-primary/10 px-6 pb-4">
-          {NAV_LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setMobileOpen(false)}
-              className="block py-2 text-sm font-medium text-text-muted hover:text-primary transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
-        </div>
+        <>
+          <button
+            className="md:hidden fixed inset-0 bg-black/20 backdrop-blur-[1px]"
+            aria-label="Close menu"
+            onClick={() => setMobileOpen(false)}
+          />
+          <Motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="md:hidden absolute left-4 right-4 top-[72px] bg-cream/98 backdrop-blur-md border border-primary/10 rounded-2xl shadow-lg shadow-black/10 p-2"
+          >
+            {NAV_LINKS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-text-muted hover:text-primary hover:bg-white/60 transition-colors"
+              >
+                <span>{l.label}</span>
+                <span className="text-primary/40">→</span>
+              </a>
+            ))}
+          </Motion.div>
+        </>
       )}
     </nav>
   );
@@ -324,7 +337,7 @@ function Contact() {
     {
       name: "Viber",
       icon: MessageCircle,
-      link: "0919-971-8724",
+      link: "viber://chat?number=%2B639199718724",
       color: "bg-purple-500",
       desc: "0919-971-8724",
     },
@@ -359,7 +372,7 @@ function Contact() {
             <motion.a
               key={c.name}
               href={c.link}
-              target={c.link.startsWith("http") ? "_blank" : undefined}
+              target="_blank"
               rel={
                 c.link.startsWith("http") ? "noopener noreferrer" : undefined
               }

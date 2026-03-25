@@ -15,8 +15,8 @@ const Motion = motion;
 
 export default function Hero() {
   const tools = [
-    { name: "Google Workspace", imageSrc: googleWorkspaceLogo },
-    { name: "Microsoft Office", imageSrc: officeLogo },
+    { name: "Workspace", imageSrc: googleWorkspaceLogo },
+    { name: "MS Office", imageSrc: officeLogo },
     { name: "Outlook", imageSrc: outlookLogo },
     { name: "Slack", imageSrc: slackLogo },
     { name: "Notion", imageSrc: notionLogo },
@@ -28,6 +28,7 @@ export default function Hero() {
     "Problem solving",
     "Attention to detail",
   ];
+  const toolFooterTraits = ["Adaptable", "Quick learner"];
 
   return (
     <section
@@ -105,7 +106,8 @@ export default function Hero() {
               show: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.65, ease: "easeOut" }}
-            className="mt-6 text-lg md:text-xl text-text-muted leading-relaxed max-w-2xl mx-auto lg:mx-0 "
+            className="mt-6 text-lg md:text-xl text-text-muted leading-relaxed max-w-2xl mx-auto lg:mx-0"
+            style={{ textAlign: "justify" }}
           >
             I’m an Executive Assistant with{" "}
             <span className="font-semibold text-primary">
@@ -159,7 +161,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0, scale: 1 },
           }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="relative mx-auto lg:mx-0 w-full max-w-xs sm:max-w-sm order-1 lg:order-2"
+          className="relative mx-auto lg:mx-0 w-full max-w-[280px] sm:max-w-sm order-1 lg:order-2"
         >
           <div
             className="absolute -inset-4 bg-primary/10 rounded-3xl blur-sm"
@@ -275,6 +277,17 @@ export default function Hero() {
                 </div>
               </motion.div>
             ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: "easeOut", delay: 0.45 }}
+            className="mt-3 px-1 pb-1 text-center"
+          >
+            <p className="text-xs sm:text-sm font-semibold text-text-muted">
+              {toolFooterTraits.join(" & ")}
+            </p>
           </motion.div>
         </div>
       </motion.div>
