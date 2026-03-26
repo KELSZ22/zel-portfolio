@@ -547,7 +547,7 @@ function FloatingActions() {
         initial={false}
         animate={{ opacity: contactOpacity }}
         transition={{ duration: 0.15, ease: "easeOut" }}
-        className="md:hidden fixed right-5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-black/15 hover:bg-primary-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+        className="md:hidden fixed right-5 bottom-20 inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-black/15 hover:bg-primary-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         aria-label="Open contact options"
         aria-haspopup="dialog"
         aria-expanded={contactOpen}
@@ -578,7 +578,7 @@ function FloatingActions() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
               transition={{ duration: 0.18, ease: "easeOut" }}
-              className="md:hidden fixed right-5 top-1/2 -translate-y-1/2 flex flex-col gap-3"
+              className="md:hidden fixed right-5 bottom-36 flex flex-col gap-3"
             >
               {CONTACTS.map((c, idx) => (
                 <motion.div
