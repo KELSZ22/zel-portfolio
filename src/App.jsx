@@ -29,6 +29,14 @@ import Hero from "./features/hero/Hero.jsx";
 import SupportSection from "./features/support/SupportSection.jsx";
 import Services from "./features/services/Services.jsx";
 import supportImage from "./assets/zel-image.png";
+import inboxEmailImage from "./assets/email.webp";
+import calendarManagementImage from "./assets/calendar_management.png";
+import canvaDesignImage from "./assets/canva_design.png";
+import dataEntryImage from "./assets/data_entry.png";
+import documentsImage from "./assets/documents.png";
+import itineraryImage from "./assets/itinerary.png";
+import travelManagementImage from "./assets/travel_management.png";
+import reportsSummaryImage from "./assets/reports_summary.png";
 
 const NAV_LINKS = [
   { href: "#hero", label: "Home" },
@@ -260,6 +268,7 @@ const WORKS = [
     title: "Inbox Management",
     desc: "Organized and prioritized executive emails with efficient filtering and timely responses.",
     icon: Inbox,
+    imageSrc: inboxEmailImage,
     gradient: "from-amber-50 to-orange-100",
     iconColor: "bg-amber-500",
     href: WORKS_URL,
@@ -268,14 +277,16 @@ const WORKS = [
     title: "Canva Designs",
     desc: "Created professional presentations, social media graphics, and branded materials.",
     icon: Palette,
+    imageSrc: canvaDesignImage,
     gradient: "from-pink-50 to-rose-100",
     iconColor: "bg-pink-500",
-    href: WORKS_URL,
+    href: "https://drive.google.com/drive/folders/1y5ntm3VGARcXfumRwkn1SbvM4BiVEKyj?usp=drive_link",
   },
   {
     title: "Calendar Management",
     desc: "Coordinated complex schedules across multiple time zones with zero conflicts.",
     icon: CalendarDays,
+    imageSrc: calendarManagementImage,
     gradient: "from-blue-50 to-indigo-100",
     iconColor: "bg-blue-500",
     href: WORKS_URL,
@@ -284,6 +295,7 @@ const WORKS = [
     title: "Data Entry",
     desc: "Accurate and efficient data input, organization, and database maintenance.",
     icon: Database,
+    imageSrc: dataEntryImage,
     gradient: "from-emerald-50 to-teal-100",
     iconColor: "bg-emerald-500",
     href: WORKS_URL,
@@ -292,6 +304,7 @@ const WORKS = [
     title: "Letters & Documents",
     desc: "Drafted professional correspondence, memos, and official business letters.",
     icon: FileText,
+    imageSrc: documentsImage,
     gradient: "from-violet-50 to-purple-100",
     iconColor: "bg-violet-500",
     href: WORKS_URL,
@@ -300,6 +313,7 @@ const WORKS = [
     title: "Travel Management",
     desc: "End-to-end travel planning including flights, hotels, visas, and ground transport.",
     icon: Globe,
+    imageSrc: travelManagementImage,
     gradient: "from-cyan-50 to-sky-100",
     iconColor: "bg-cyan-500",
     href: WORKS_URL,
@@ -308,6 +322,7 @@ const WORKS = [
     title: "Itinerary Planning",
     desc: "Detailed day-by-day itineraries with activities, dining, and logistics.",
     icon: MapPin,
+    imageSrc: itineraryImage,
     gradient: "from-lime-50 to-green-100",
     iconColor: "bg-lime-600",
     href: WORKS_URL,
@@ -316,6 +331,7 @@ const WORKS = [
     title: "Reports & Summaries",
     desc: "Compiled data-driven reports, meeting summaries, and executive briefings.",
     icon: BarChart3,
+    imageSrc: reportsSummaryImage,
     gradient: "from-orange-50 to-amber-100",
     iconColor: "bg-orange-500",
     href: WORKS_URL,
@@ -374,11 +390,20 @@ function SampleWorks() {
                 <div
                   className={`relative flex items-center justify-center bg-linear-to-br ${work.gradient} md:w-1/2 aspect-4/3 md:aspect-auto md:min-h-[340px]`}
                 >
-                  <div
-                    className={`${work.iconColor} w-20 h-20 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-black/10`}
-                  >
-                    {createElement(work.icon, { size: 36 })}
-                  </div>
+                  {work.imageSrc ? (
+                    <img
+                      src={work.imageSrc}
+                      alt={work.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div
+                      className={`${work.iconColor} w-20 h-20 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-black/10`}
+                    >
+                      {createElement(work.icon, { size: 36 })}
+                    </div>
+                  )}
                   <span className="absolute bottom-4 right-4 text-xs font-medium text-text-muted/50 tracking-wide uppercase">
                     {workIndex + 1} / {works.length}
                   </span>
@@ -593,7 +618,7 @@ function FloatingActions() {
                   }}
                   className="relative"
                 >
-                  <motion.div
+                  <motion.a
                     initial={{ opacity: 0, x: 6, scale: 0.98 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: 6, scale: 0.98 }}
@@ -602,7 +627,11 @@ function FloatingActions() {
                       ease: "easeOut",
                       delay: idx * 0.04 + 0.02,
                     }}
-                    className="pointer-events-none absolute right-[calc(100%+0.75rem)] top-1/2 -translate-y-1/2 w-44 rounded-xl bg-cream/95 backdrop-blur-md border border-primary/10 shadow-lg shadow-black/15 px-3 py-2 text-text"
+                    href={c.link}
+                    target="_blank"
+                    rel={c.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                    onClick={() => setContactOpen(false)}
+                    className="absolute right-[calc(100%+0.75rem)] top-1/2 -translate-y-1/2 w-44 rounded-xl bg-cream/95 backdrop-blur-md border border-primary/10 shadow-lg shadow-black/15 px-3 py-2 text-text hover:bg-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
                   >
                     <div className="text-[10px] font-bold tracking-wide uppercase text-text-muted">
                       {c.name}
@@ -610,7 +639,7 @@ function FloatingActions() {
                     <div className="text-xs font-semibold leading-snug wrap-break-word">
                       {c.desc}
                     </div>
-                  </motion.div>
+                  </motion.a>
 
                   <a
                     href={c.link}
