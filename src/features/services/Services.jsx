@@ -7,6 +7,8 @@ import {
   Plane,
 } from "lucide-react";
 
+import { motion } from "framer-motion";
+
 export default function Services() {
   const serviceBlocks = [
     {
@@ -67,7 +69,7 @@ export default function Services() {
           }}
           className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch"
         >
-          {serviceBlocks.map(({ title, desc }) => (
+          {serviceBlocks.map(({ title, desc, Icon }) => (
             <motion.div
               key={title}
               variants={{
