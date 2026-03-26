@@ -6,7 +6,6 @@ import {
   Paintbrush,
   Plane,
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 export default function Services() {
   const serviceBlocks = [
@@ -68,7 +67,7 @@ export default function Services() {
           }}
           className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch"
         >
-          {serviceBlocks.map(({ title, desc, Icon }) => (
+          {serviceBlocks.map(({ title, desc }) => (
             <motion.div
               key={title}
               variants={{
@@ -99,19 +98,7 @@ export default function Services() {
             </motion.div>
           ))}
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.55, ease: "easeOut", delay: 0.05 }}
-          className="mt-10 bg-secondary text-white py-4 px-6 text-center font-medium"
-        >
-          Supporting executives with efficiency, discretion, and
-          professionalism.
-        </motion.div>
       </div>
     </section>
   );
 }
-

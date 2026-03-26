@@ -17,11 +17,13 @@ import {
   MessageCircle,
   Camera,
   ChevronUp,
+  ChevronLeft,
+  ChevronRight,
   Menu,
   X,
 } from "lucide-react";
-import { createElement, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { createElement, useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import Hero from "./features/hero/Hero.jsx";
 import SupportSection from "./features/support/SupportSection.jsx";
@@ -33,6 +35,39 @@ const NAV_LINKS = [
   { href: "#services", label: "Services" },
   { href: "#works", label: "Works" },
   { href: "#contact", label: "Contact" },
+];
+
+const EMAIL_ADDRESS = "zeal.sabino@gmail.com";
+
+const CONTACTS = [
+  {
+    name: "Email",
+    icon: Mail,
+    link: `mailto:${EMAIL_ADDRESS}`,
+    color: "bg-secondary",
+    desc: EMAIL_ADDRESS,
+  },
+  {
+    name: "WhatsApp",
+    icon: Phone,
+    link: "https://wa.me/639762634387",
+    color: "bg-green-500",
+    desc: "0919-971-8724",
+  },
+  {
+    name: "Viber",
+    icon: Phone,
+    link: "viber://chat?number=%2B639199718724",
+    color: "bg-purple-500",
+    desc: "0919-971-8724",
+  },
+  {
+    name: "Instagram",
+    icon: Camera,
+    link: "https://www.instagram.com/zelsbn?igsh=MTFhYjlndjhvdGh2cA==",
+    color: "bg-pink-500",
+    desc: "Follow my journey",
+  },
 ];
 
 // eslint doesn't always count JSX member usage (e.g. <motion.div />) as a reference.
@@ -206,192 +241,249 @@ function About() {
   );
 }
 
-function SampleWorks() {
-  const WORKS_URL = "https://drive.google.com/drive/folders/";
+const carouselVariants = {
+  enter: (direction) => ({
+    x: direction > 0 ? 280 : -280,
+    opacity: 0,
+  }),
+  center: { x: 0, opacity: 1 },
+  exit: (direction) => ({
+    x: direction < 0 ? 280 : -280,
+    opacity: 0,
+  }),
+};
 
-  const works = [
-    {
-      title: "Inbox Management",
-      desc: "Organized and prioritized executive emails, filtering urgent items and drafting responses.",
-      icon: Inbox,
-      href: WORKS_URL,
+const WORKS_URL = "https://drive.google.com/drive/folders/";
+
+const WORKS = [
+  {
+    title: "Inbox Management",
+    desc: "Organized and prioritized executive emails with efficient filtering and timely responses.",
+    icon: Inbox,
+    gradient: "from-amber-50 to-orange-100",
+    iconColor: "bg-amber-500",
+    href: WORKS_URL,
+  },
+  {
+    title: "Canva Designs",
+    desc: "Created professional presentations, social media graphics, and branded materials.",
+    icon: Palette,
+    gradient: "from-pink-50 to-rose-100",
+    iconColor: "bg-pink-500",
+    href: WORKS_URL,
+  },
+  {
+    title: "Calendar Management",
+    desc: "Coordinated complex schedules across multiple time zones with zero conflicts.",
+    icon: CalendarDays,
+    gradient: "from-blue-50 to-indigo-100",
+    iconColor: "bg-blue-500",
+    href: WORKS_URL,
+  },
+  {
+    title: "Data Entry",
+    desc: "Accurate and efficient data input, organization, and database maintenance.",
+    icon: Database,
+    gradient: "from-emerald-50 to-teal-100",
+    iconColor: "bg-emerald-500",
+    href: WORKS_URL,
+  },
+  {
+    title: "Letters & Documents",
+    desc: "Drafted professional correspondence, memos, and official business letters.",
+    icon: FileText,
+    gradient: "from-violet-50 to-purple-100",
+    iconColor: "bg-violet-500",
+    href: WORKS_URL,
+  },
+  {
+    title: "Travel Management",
+    desc: "End-to-end travel planning including flights, hotels, visas, and ground transport.",
+    icon: Globe,
+    gradient: "from-cyan-50 to-sky-100",
+    iconColor: "bg-cyan-500",
+    href: WORKS_URL,
+  },
+  {
+    title: "Itinerary Planning",
+    desc: "Detailed day-by-day itineraries with activities, dining, and logistics.",
+    icon: MapPin,
+    gradient: "from-lime-50 to-green-100",
+    iconColor: "bg-lime-600",
+    href: WORKS_URL,
+  },
+  {
+    title: "Reports & Summaries",
+    desc: "Compiled data-driven reports, meeting summaries, and executive briefings.",
+    icon: BarChart3,
+    gradient: "from-orange-50 to-amber-100",
+    iconColor: "bg-orange-500",
+    href: WORKS_URL,
+  },
+];
+
+function SampleWorks() {
+  const [[page, direction], setPage] = useState([0, 0]);
+
+  const works = WORKS;
+
+  const workIndex = ((page % works.length) + works.length) % works.length;
+  const work = works[workIndex];
+
+  const paginate = useCallback((dir) => {
+    setPage(([prev]) => [prev + dir, dir]);
+  }, []);
+
+  const goToSlide = useCallback(
+    (idx) => {
+      setPage(([prev]) => {
+        const currentIdx =
+          ((prev % works.length) + works.length) % works.length;
+        return [idx, idx > currentIdx ? 1 : -1];
+      });
     },
-    {
-      title: "Canva Designs",
-      desc: "Created professional presentations, social media graphics, and branded materials.",
-      icon: Palette,
-      href: WORKS_URL,
-    },
-    {
-      title: "Calendar Management",
-      desc: "Coordinated complex schedules across multiple time zones with zero conflicts.",
-      icon: CalendarDays,
-      href: WORKS_URL,
-    },
-    {
-      title: "Data Entry",
-      desc: "Accurate and efficient data input, organization, and database maintenance.",
-      icon: Database,
-      href: WORKS_URL,
-    },
-    {
-      title: "Letters & Documents",
-      desc: "Drafted professional correspondence, memos, and official business letters.",
-      icon: FileText,
-      href: WORKS_URL,
-    },
-    {
-      title: "Travel Management",
-      desc: "End-to-end travel planning including flights, hotels, visas, and ground transport.",
-      icon: Globe,
-      href: WORKS_URL,
-    },
-    {
-      title: "Itinerary Planning",
-      desc: "Detailed day-by-day itineraries with activities, dining, and logistics.",
-      icon: MapPin,
-      href: WORKS_URL,
-    },
-    {
-      title: "Reports & Summaries",
-      desc: "Compiled data-driven reports, meeting summaries, and executive briefings.",
-      icon: BarChart3,
-      href: WORKS_URL,
-    },
-  ];
+    [works.length],
+  );
+
+  useEffect(() => {
+    const timer = setInterval(() => paginate(1), 5000);
+    return () => clearInterval(timer);
+  }, [page, paginate]);
 
   return (
     <section id="works" className="py-20 px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <SectionHeading
           title="Sample Works"
           subtitle="A glimpse of the work I deliver for my clients"
         />
 
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.06 } },
-          }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
-        >
-          {works.map(({ title, desc, icon, href }) => (
-            <motion.div
-              key={title}
-              variants={{
-                hidden: { opacity: 0, y: 18 },
-                show: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              whileHover={{ y: -8 }}
-              className="group bg-white rounded-2xl shadow-md shadow-black/5 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
-                {createElement(icon, { size: 22 })}
-              </div>
-              <h3 className="font-semibold text-text text-base mb-2">
-                {title}
-              </h3>
-              <p className="text-sm text-text-muted leading-relaxed flex-1">
-                {desc}
-              </p>
-
-              <a
-                href={href || WORKS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded"
+        <div className="relative">
+          <div className="overflow-hidden rounded-3xl bg-white shadow-lg shadow-black/5">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={page}
+                custom={direction}
+                variants={carouselVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="flex flex-col md:flex-row"
               >
-                View Work
-                <ExternalLink size={16} />
-              </a>
-            </motion.div>
+                <div
+                  className={`relative flex items-center justify-center bg-linear-to-br ${work.gradient} md:w-1/2 aspect-4/3 md:aspect-auto md:min-h-[340px]`}
+                >
+                  <div
+                    className={`${work.iconColor} w-20 h-20 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-black/10`}
+                  >
+                    {createElement(work.icon, { size: 36 })}
+                  </div>
+                  <span className="absolute bottom-4 right-4 text-xs font-medium text-text-muted/50 tracking-wide uppercase">
+                    {workIndex + 1} / {works.length}
+                  </span>
+                </div>
+
+                <div className="flex flex-col justify-center p-8 md:p-10 md:w-1/2">
+                  <h3 className="text-2xl font-bold text-text mb-3">
+                    {work.title}
+                  </h3>
+                  <p className="text-text-muted leading-relaxed">{work.desc}</p>
+                  <a
+                    href={work.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark transition-colors w-fit focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded"
+                  >
+                    View Work
+                    <ExternalLink size={16} />
+                  </a>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <button
+            onClick={() => paginate(-1)}
+            className="absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md shadow-black/10 flex items-center justify-center text-text-muted hover:text-primary hover:shadow-lg transition-all cursor-pointer"
+            aria-label="Previous work"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={() => paginate(1)}
+            className="absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md shadow-black/10 flex items-center justify-center text-text-muted hover:text-primary hover:shadow-lg transition-all cursor-pointer"
+            aria-label="Next work"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        <div className="flex justify-center gap-2 mt-6">
+          {works.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goToSlide(i)}
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                i === workIndex
+                  ? "bg-primary w-7"
+                  : "bg-primary/25 hover:bg-primary/40 w-2.5"
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
 function Contact() {
-  const EMAIL_ADDRESS = "zeal.sabino@gmail.com";
-
-  const contacts = [
-    {
-      name: "Email",
-      icon: Mail,
-      link: `mailto:${EMAIL_ADDRESS}`,
-      color: "bg-secondary",
-      desc: EMAIL_ADDRESS,
-    },
-    {
-      name: "WhatsApp",
-      icon: Phone,
-      link: "https://wa.me/639762634387",
-      color: "bg-green-500",
-      desc: "Message me directly",
-    },
-    {
-      name: "Viber",
-      icon: MessageCircle,
-      link: "viber://chat?number=%2B639199718724",
-      color: "bg-purple-500",
-      desc: "0919-971-8724",
-    },
-    {
-      name: "Instagram",
-      icon: Camera,
-      link: "https://www.instagram.com/zelsbn?igsh=MTFhYjlndjhvdGh2cA==",
-      color: "bg-pink-500",
-      desc: "Follow my journey",
-    },
-  ];
-
   return (
-    <section id="contact" className="py-20 px-6">
+    <section
+      id="contact"
+      className="hidden md:block py-20 px-6 bg-white border-y border-primary/10"
+    >
       <div className="max-w-3xl mx-auto">
         <SectionHeading
           title="Get in Touch"
-          subtitle="Let's work together — reach out through any of these platforms"
+          subtitle="A few quick ways to reach me"
         />
 
         <motion.div
-          initial="hidden"
-          whileInView="show"
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.45 }}
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.07 } },
-          }}
-          className="grid grid-cols-1 gap-3 sm:grid-cols-4 sm:gap-4"
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="rounded-2xl border border-primary/10 overflow-hidden"
         >
-          {contacts.map((c) => (
-            <motion.a
+          {CONTACTS.map((c, idx) => (
+            <a
               key={c.name}
               href={c.link}
               target="_blank"
               rel={
                 c.link.startsWith("http") ? "noopener noreferrer" : undefined
               }
-              variants={{
-                hidden: { opacity: 0, y: 16, scale: 0.99 },
-                show: { opacity: 1, y: 0, scale: 1 },
-              }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              whileHover={{ y: -6 }}
-              className="group bg-white rounded-xl shadow-md shadow-black/5 p-4 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              className={`flex items-center gap-4 px-5 py-4 transition-colors hover:bg-cream/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+                idx !== CONTACTS.length - 1 ? "border-b border-primary/10" : ""
+              }`}
             >
-              <div
-                className={`mx-auto w-12 h-12 rounded-full ${c.color} text-white flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}
+              <span
+                className={`w-10 h-10 rounded-xl ${c.color} text-white inline-flex items-center justify-center shrink-0`}
+                aria-hidden="true"
               >
-                <c.icon size={20} />
-              </div>
-              <h3 className="font-semibold text-text">{c.name}</h3>
-              <p className="text-xs text-text-muted mt-1">{c.desc}</p>
-            </motion.a>
+                <c.icon size={18} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-text">
+                  {c.name}
+                </span>
+                <span className="block text-sm text-text-muted truncate">
+                  {c.desc}
+                </span>
+              </span>
+            </a>
           ))}
         </motion.div>
       </div>
@@ -406,15 +498,175 @@ function Footer() {
         <p className="text-sm text-text-muted">
           &copy; {new Date().getFullYear()} Zel. All rights reserved.
         </p>
-        <a
-          href="#hero"
-          className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary-dark transition-colors font-medium"
-        >
-          Back to top
-          <ChevronUp size={16} />
-        </a>
       </div>
     </footer>
+  );
+}
+
+function FloatingActions() {
+  const [showTop, setShowTop] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrollY(window.scrollY || 0);
+      setShowTop(window.scrollY > 420);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const contactOpacity = scrollY > 80 ? 1 : 0.8;
+
+  useEffect(() => {
+    if (!contactOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setContactOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [contactOpen]);
+
+  useEffect(() => {
+    if (!contactOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [contactOpen]);
+
+  return (
+    <div className="fixed right-5 bottom-5 z-50 flex flex-col gap-3">
+      {/* Mobile contact FAB */}
+      <motion.button
+        type="button"
+        onClick={() => setContactOpen((v) => !v)}
+        initial={false}
+        animate={{ opacity: contactOpacity }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+        className="md:hidden fixed right-5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white shadow-lg shadow-black/15 hover:bg-primary-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+        aria-label="Open contact options"
+        aria-haspopup="dialog"
+        aria-expanded={contactOpen}
+      >
+        <Mail size={18} />
+      </motion.button>
+
+      {/* Mobile contact menu (icon-only) */}
+      <AnimatePresence>
+        {contactOpen && (
+          <>
+            <motion.button
+              type="button"
+              className="md:hidden fixed inset-0 bg-black/35 backdrop-blur-[1px]"
+              aria-label="Close contact options"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => {
+                setContactOpen(false);
+              }}
+            />
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Contact options"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="md:hidden fixed right-5 top-1/2 -translate-y-1/2 flex flex-col gap-3"
+            >
+              {CONTACTS.map((c, idx) => (
+                <motion.div
+                  key={c.name}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{
+                    duration: 0.16,
+                    ease: "easeOut",
+                    delay: idx * 0.04,
+                  }}
+                  className="relative"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, x: 6, scale: 0.98 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: 6, scale: 0.98 }}
+                    transition={{
+                      duration: 0.14,
+                      ease: "easeOut",
+                      delay: idx * 0.04 + 0.02,
+                    }}
+                    className="pointer-events-none absolute right-[calc(100%+0.75rem)] top-1/2 -translate-y-1/2 w-44 rounded-xl bg-cream/95 backdrop-blur-md border border-primary/10 shadow-lg shadow-black/15 px-3 py-2 text-text"
+                  >
+                    <div className="text-[10px] font-bold tracking-wide uppercase text-text-muted">
+                      {c.name}
+                    </div>
+                    <div className="text-xs font-semibold leading-snug wrap-break-word">
+                      {c.desc}
+                    </div>
+                  </motion.div>
+
+                  <a
+                    href={c.link}
+                    target="_blank"
+                    rel={
+                      c.link.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    onClick={() => setContactOpen(false)}
+                    className={`w-12 h-12 rounded-full ${c.color} text-white inline-flex items-center justify-center shadow-lg shadow-black/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent`}
+                    aria-label={c.name}
+                    title={c.desc}
+                  >
+                    <c.icon size={18} />
+                  </a>
+                </motion.div>
+              ))}
+
+              <motion.button
+                type="button"
+                onClick={() => setContactOpen(false)}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{
+                  duration: 0.16,
+                  ease: "easeOut",
+                  delay: CONTACTS.length * 0.04,
+                }}
+                className="w-12 h-12 rounded-full bg-white/90 text-text-muted inline-flex items-center justify-center border border-primary/10 shadow-lg shadow-black/10 hover:bg-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                aria-label="Close contact options"
+              >
+                <X size={18} />
+              </motion.button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Back-to-top FAB */}
+      <motion.a
+        href="#hero"
+        aria-label="Back to top"
+        initial={false}
+        animate={{
+          opacity: showTop ? 1 : 0,
+          y: showTop ? 0 : 10,
+          pointerEvents: showTop ? "auto" : "none",
+        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-primary shadow-lg shadow-black/15 border border-primary/15 hover:border-primary/30 hover:shadow-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+      >
+        <ChevronUp size={20} />
+      </motion.a>
+    </div>
   );
 }
 
@@ -447,6 +699,7 @@ export default function App() {
       <SampleWorks />
       <Contact />
       <Footer />
+      <FloatingActions />
     </div>
   );
 }

@@ -33,7 +33,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative isolate min-h-svh px-6 pt-20 pb-14 bg-white/40 border-b border-primary/10 overflow-hidden"
+      className="relative isolate min-h-svh px-6 pt-20 pb-0 sm:pb-14 bg-white/40 border-b border-primary/10 overflow-hidden"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-70"
@@ -75,30 +75,32 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left order-2 lg:order-1 mt-8 lg:mt-0"
+          className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left order-1 lg:order-1 mt-0"
         >
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              show: { opacity: 1, y: 0 },
-            }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6"
-          >
-            <Briefcase size={16} />
-            Executive Assistant & Administrative Support
-          </motion.div>
+          <div className="flex flex-col items-center lg:items-start">
+            <motion.h1
+              variants={{
+                hidden: { opacity: 0, y: 14 },
+                show: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.65, ease: "easeOut" }}
+              className="order-1 lg:order-2 text-4xl sm:text-5xl md:text-6xl font-bold text-text leading-tight"
+            >
+              Hi, I'm <span className="text-primary">Zel</span>
+            </motion.h1>
 
-          <motion.h1
-            variants={{
-              hidden: { opacity: 0, y: 14 },
-              show: { opacity: 1, y: 0 },
-            }}
-            transition={{ duration: 0.65, ease: "easeOut" }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-text leading-tight"
-          >
-            Hi, I'm <span className="text-primary">Zel</span>
-          </motion.h1>
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 12 },
+                show: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              className="order-2 lg:order-1 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-xs sm:text-sm font-medium text-primary mt-4 lg:mt-0 mb-0 lg:mb-6"
+            >
+              <Briefcase size={16} />
+              Executive Assistant & Administrative Support
+            </motion.div>
+          </div>
 
           <motion.p
             variants={{
@@ -161,7 +163,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0, scale: 1 },
           }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="relative mx-auto lg:mx-0 w-full max-w-[280px] sm:max-w-sm order-1 lg:order-2"
+          className="relative mx-auto lg:mx-0 w-full max-w-[220px] sm:max-w-[280px] lg:max-w-sm order-2 lg:order-2 mt-8 lg:mt-0"
         >
           <div
             className="absolute -inset-4 bg-primary/10 rounded-3xl blur-sm"
@@ -180,10 +182,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.35 }}
-            className="absolute left-1/2 -bottom-6 -translate-x-1/2 w-[calc(100%-0.5rem)] sm:w-[calc(100%-1.5rem)]"
+            className="absolute left-1/2 -bottom-6 -translate-x-1/2 w-[calc(100vw-3rem)] max-w-md sm:w-[calc(100%-1.5rem)] sm:max-w-none"
           >
             <div className="bg-cream/90 backdrop-blur-md border border-primary/10 rounded-md shadow-lg shadow-black/15 px-3 py-5">
-              <div className="flex flex-nowrap sm:flex-wrap items-center justify-start sm:justify-center gap-x-3 gap-y-2 overflow-x-auto">
+              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
                 <motion.a
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
