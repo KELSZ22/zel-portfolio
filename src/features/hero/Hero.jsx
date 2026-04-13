@@ -8,6 +8,7 @@ import outlookLogo from "../../assets/outlook.webp";
 import slackLogo from "../../assets/Slack.png";
 import notionLogo from "../../assets/notion.png";
 import canvaLogo from "../../assets/canva.jpg";
+import asanaLogo from "../../assets/asana.png";
 
 // eslint doesn't always count JSX member usage (e.g. <motion.div />) as a reference.
 // Keeping an uppercase alias avoids false-positive "unused import" errors.
@@ -21,6 +22,7 @@ export default function Hero() {
     { name: "Slack", imageSrc: slackLogo },
     { name: "Notion", imageSrc: notionLogo },
     { name: "Canva", imageSrc: canvaLogo },
+    { name: "Asana", imageSrc: asanaLogo },
   ];
   const skills = [
     "Time management",
