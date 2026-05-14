@@ -114,13 +114,13 @@ export default function Hero() {
             style={{ textAlign: "justify" }}
           >
             Professional and results-driven operations and administrative
-            support specialist with nearly 6 years of experience in customer
-            service, corporate administration, and daily business operations.
-            Experienced in supporting management teams in fast-paced
-            environments, including leadership experience at McDonald's and
-            executive administrative support within a manpower agency. Skilled
-            in operations coordination, team support, client communication,
-            multitasking, and maintaining efficient workplace processes.
+            support with 6 years of experience in customer service, corporate
+            administration, and daily business operations. Experienced in
+            supporting management teams in fast-paced environments, including
+            leadership experience at McDonald's and executive administrative
+            support within a manpower agency. Skilled in operations
+            coordination, team support, client communication, multitasking, and
+            maintaining efficient workplace processes.
           </motion.p>
 
           <motion.div
