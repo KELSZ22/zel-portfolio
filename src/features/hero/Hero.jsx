@@ -113,16 +113,14 @@ export default function Hero() {
             className="mt-6 text-lg md:text-xl text-text-muted leading-relaxed max-w-2xl mx-auto lg:mx-0"
             style={{ textAlign: "justify" }}
           >
-            I’m an Executive Assistant with{" "}
-            <span className="font-semibold text-primary">
-              2 years and 7 months
-            </span>{" "}
-            of corporate experience supporting operations and administrative
-            tasks. I specialize in inbox management, calendar management, travel
-            planning, and administrative support to help executives stay
-            organized and productive. I also assist with data entry, document
-            organization, and basic Canva design for presentations and simple
-            visual materials.
+            Professional and results-driven operations and administrative
+            support specialist with nearly 6 years of experience in customer
+            service, corporate administration, and daily business operations.
+            Experienced in supporting management teams in fast-paced
+            environments, including leadership experience at McDonald's and
+            executive administrative support within a manpower agency. Skilled
+            in operations coordination, team support, client communication,
+            multitasking, and maintaining efficient workplace processes.
           </motion.p>
 
           <motion.div
