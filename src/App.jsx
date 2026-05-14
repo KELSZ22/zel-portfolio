@@ -198,16 +198,14 @@ function About() {
           className="bg-white rounded-3xl shadow-lg shadow-black/5 p-8 md:p-12"
         >
           <p className="text-text-muted leading-relaxed text-base md:text-lg">
-            I am a highly organized and detail-oriented Executive Assistant with
-            2 years and 7 months of hands-on experience in providing
-            comprehensive administrative support to executives and teams. My
-            expertise includes managing complex calendars, coordinating travel
-            arrangements, handling correspondence, preparing reports, and
-            streamlining day-to-day operations. I thrive in fast-paced
-            environments and am passionate about anticipating needs, solving
-            problems proactively, and ensuring seamless workflow. With strong
-            communication skills and a commitment to confidentiality, I bring
-            professionalism and efficiency to every task I undertake.
+            Professional and results-driven operations and administrative
+            support specialist with nearly 6 years of experience in customer
+            service, corporate administration, and daily business operations.
+            Experienced in supporting management teams in fast-paced
+            environments, including leadership experience at McDonald's and
+            executive administrative support within a manpower agency. Skilled
+            in operations coordination, team support, client communication,
+            multitasking, and maintaining efficient workplace processes.
           </p>
 
           <motion.div
@@ -629,7 +627,11 @@ function FloatingActions() {
                     }}
                     href={c.link}
                     target="_blank"
-                    rel={c.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                    rel={
+                      c.link.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                     onClick={() => setContactOpen(false)}
                     className="absolute right-[calc(100%+0.75rem)] top-1/2 -translate-y-1/2 w-44 rounded-xl bg-cream/95 backdrop-blur-md border border-primary/10 shadow-lg shadow-black/15 px-3 py-2 text-text hover:bg-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
                   >
